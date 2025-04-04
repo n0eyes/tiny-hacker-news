@@ -1,19 +1,36 @@
-import type { Metadata } from "next";
-import { PropsWithChildren } from "react";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Metadata } from "next";
+import type React from "react";
 
-const metadata: Metadata = {
+import { Header } from "./header";
+import { ThemeToggle } from "@/components/theme-toggle";
+
+import "./globals.css";
+
+export const metadata: Metadata = {
   title: "Tiny Hacker News",
-  description: "Tiny(or Today's) Hacker News",
+  description: "Tiny Hacker News",
 };
 
-const RootLayout = ({ children }: PropsWithChildren) => {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="ko">
+      <head />
+      <body className="bg-gray-50 transition-colors duration-200 dark:bg-[#202020]">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={true}
+          disableTransitionOnChange
+        >
+          <Header />
+          <main className="max-w-dvw">{children}</main>
+
+          <ThemeToggle />
+        </ThemeProvider>
+      </body>
     </html>
   );
 };
-
-export { metadata };
 
 export default RootLayout;
